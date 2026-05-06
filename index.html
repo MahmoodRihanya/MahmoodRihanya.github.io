@@ -344,8 +344,30 @@
     .timeline-company { font-size: .9rem; color: var(--muted); margin-bottom: .75rem; }
     .timeline-desc { font-size: .9rem; color: var(--muted); font-weight: 300; line-height: 1.7; }
 
+    /* ── EDUCATION ── */
+    #education { background: var(--surface); }
+    .education-item {
+      display: flex; gap: 1.5rem; align-items: flex-start;
+      padding: 1.75rem; border-radius: 14px;
+      background: var(--bg); border: 1px solid var(--border);
+      max-width: 720px; transition: all .3s;
+    }
+    .education-item:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-3px); }
+    .education-icon {
+      font-size: 2rem; flex-shrink: 0;
+      width: 56px; height: 56px;
+      background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.2);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    }
+    .education-body {}
+    .education-degree {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: .2rem;
+    }
+    .education-school { font-size: .95rem; color: var(--accent); font-weight: 500; margin-bottom: .3rem; }
+    .education-meta { font-size: .85rem; color: var(--muted); }
+
     /* ── CONTACT ── */
-    #contact { background: var(--surface); text-align: center; }
+    #contact { background: var(--bg); text-align: center; }
     .contact-inner { max-width: 600px; margin: 0 auto; }
     .contact-inner .section-desc { margin-inline: auto; margin-bottom: 2.5rem; }
     .contact-links {
@@ -413,6 +435,7 @@
     <li><a href="#skills">Skills</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
     <li><a href="#contact" class="nav-cta">Hire Me</a></li>
   </ul>
 </nav>
@@ -674,37 +697,33 @@
 
     <div class="timeline-item reveal">
       <div class="timeline-dot"></div>
-      <div class="timeline-date">2022 — Present</div>
-      <div class="timeline-title">Senior Mobile Developer</div>
-      <div class="timeline-company">Company Name · Full-time</div>
-      <div class="timeline-desc">
-        Describe your responsibilities and achievements here. What did you build? What impact did you have?
-        Mention team size, technologies used, and any measurable results.
-      </div>
-    </div>
-
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-date">2020 — 2022</div>
+      <div class="timeline-date">Oct 2026 — Present</div>
       <div class="timeline-title">Mobile App Developer</div>
-      <div class="timeline-company">Previous Company · Full-time</div>
+      <div class="timeline-company">AnyCode · Full-time · Aleppo</div>
       <div class="timeline-desc">
-        Describe your role here. What projects did you work on? What skills did you develop?
-        Don't be shy — highlight your best contributions.
+        Developing cross-platform mobile applications using Flutter for iOS and Android.
+        Working within a professional team environment, integrating REST APIs, Firebase services,
+        and building scalable, user-friendly mobile solutions.
       </div>
     </div>
 
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-date">2018 — 2020</div>
-      <div class="timeline-title">Junior Developer</div>
-      <div class="timeline-company">First Company · Full-time</div>
-      <div class="timeline-desc">
-        Your starting point. Everyone has one. Describe what you learned and how you grew here.
-        Add or remove timeline items as needed.
-      </div>
-    </div>
+  </div>
+</section>
 
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header reveal">
+    <div class="section-label">Academic Background</div>
+    <h2 class="section-title">Education</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="education-item reveal">
+    <div class="education-icon">🎓</div>
+    <div class="education-body">
+      <div class="education-degree">Computer Information Engineering</div>
+      <div class="education-school">University of Aleppo · 3rd Year</div>
+      <div class="education-meta">Currently Enrolled</div>
+    </div>
   </div>
 </section>
 
@@ -729,9 +748,6 @@
         Telegram
       </a>
       <a href="mailto:mahmoodrihanya0@gmail.com" class="contact-link">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-        Email Me
-      </a>
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
         Email Me
       </a>
