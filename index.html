@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mahmood Rihanya — Mobile App Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #08090c;
+      --surface: #0f1117;
+      --surface2: #161820;
+      --border: rgba(255,255,255,0.07);
+      --accent: #00e5ff;
+      --accent2: #7c3aed;
+      --accent3: #f97316;
+      --text: #f0f2f7;
+      --muted: #8b92a5;
+      --card-glow: rgba(0,229,255,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: .5;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 6vw;
+      background: rgba(8,9,12,0.7);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em;
+      color: var(--text); text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: .9rem; font-weight: 500; letter-spacing: 0.02em;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      padding: .5rem 1.25rem;
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      color: var(--accent) !important;
+      transition: background .2s !important;
+    }
+    .nav-cta:hover { background: rgba(0,229,255,0.1) !important; color: var(--accent) !important; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid; place-items: center;
+      padding: 8rem 6vw 5rem;
+      position: relative;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,229,255,0.12) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -55%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      max-width: 860px; text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.2);
+      border-radius: 100px; padding: .35rem 1rem;
+      font-size: .8rem; color: var(--accent); margin-bottom: 2rem;
+      animation: fadeUp .6s ease both;
+    }
+    .badge-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 800; line-height: 1.05;
+      letter-spacing: -0.03em;
+      animation: fadeUp .6s .1s ease both;
+    }
+    h1 em { font-style: normal; color: var(--accent); }
+    .hero-sub {
+      margin-top: 1.5rem;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--muted); font-weight: 300; max-width: 560px; margin-inline: auto;
+      animation: fadeUp .6s .2s ease both;
+    }
+    .hero-actions {
+      margin-top: 2.5rem;
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      animation: fadeUp .6s .3s ease both;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .85rem 2rem; border-radius: 8px;
+      font-size: .95rem; font-weight: 500;
+      text-decoration: none; transition: all .2s;
+      cursor: pointer; border: none; font-family: inherit;
+    }
+    .btn-primary {
+      background: var(--accent); color: #000;
+    }
+    .btn-primary:hover { background: #33ebff; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,229,255,0.3); }
+    .btn-secondary {
+      background: var(--surface2); color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+    .hero-stats {
+      margin-top: 4rem;
+      display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+      animation: fadeUp .6s .4s ease both;
+    }
+    .stat-item { text-align: center; }
+    .stat-number {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem; font-weight: 800; color: var(--text);
+    }
+    .stat-number span { color: var(--accent); }
+    .stat-label { font-size: .8rem; color: var(--muted); margin-top: .2rem; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTIONS COMMON ── */
+    section { padding: 6rem 6vw; position: relative; }
+    .section-label {
+      font-size: .75rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--accent); font-weight: 600; margin-bottom: .75rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800; letter-spacing: -0.02em; line-height: 1.15;
+    }
+    .section-desc {
+      margin-top: 1rem; color: var(--muted);
+      max-width: 540px; font-size: 1rem; font-weight: 300;
+    }
+    .section-header { margin-bottom: 3.5rem; }
+    .divider {
+      width: 48px; height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      border-radius: 2px; margin-top: 1rem;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--surface); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .about-image-wrap {
+      position: relative;
+    }
+    .about-photo {
+      width: 100%; aspect-ratio: 4/5; object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .photo-placeholder {
+      width: 100%; aspect-ratio: 4/5;
+      background: linear-gradient(135deg, var(--surface2) 0%, #1a1d2a 100%);
+      border-radius: 16px; border: 1px solid var(--border);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 1rem; color: var(--muted); font-size: .9rem;
+      position: relative; overflow: hidden;
+    }
+    .photo-placeholder::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(0,229,255,0.06), transparent 60%);
+    }
+    .photo-icon { font-size: 4rem; opacity: .3; }
+    .about-badge {
+      position: absolute; bottom: -1rem; right: -1rem;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1rem 1.25rem;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .about-badge-icon { font-size: 1.5rem; }
+    .about-badge-text { font-size: .8rem; color: var(--muted); line-height: 1.3; }
+    .about-badge-text strong { display: block; color: var(--text); font-size: .95rem; }
+
+    .about-text p { color: var(--muted); font-weight: 300; margin-bottom: 1rem; font-size: 1.05rem; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
+    .tag {
+      padding: .35rem .9rem; border-radius: 100px;
+      background: var(--surface2); border: 1px solid var(--border);
+      font-size: .8rem; color: var(--muted);
+      transition: all .2s;
+    }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── SKILLS ── */
+    #skills { }
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem;
+    }
+    .skill-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.75rem;
+      transition: all .3s;
+      position: relative; overflow: hidden;
+    }
+    .skill-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--card-glow);
+      opacity: 0; transition: opacity .3s;
+    }
+    .skill-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-4px); }
+    .skill-card:hover::before { opacity: 1; }
+    .skill-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .skill-name {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 1rem; margin-bottom: .5rem;
+    }
+    .skill-desc { font-size: .85rem; color: var(--muted); font-weight: 300; }
+    .skill-bar-wrap { margin-top: 1.25rem; }
+    .skill-bar-label {
+      display: flex; justify-content: space-between;
+      font-size: .75rem; color: var(--muted); margin-bottom: .4rem;
+    }
+    .skill-bar {
+      height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden;
+    }
+    .skill-bar-fill {
+      height: 100%; border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform-origin: left;
+      animation: barGrow 1s ease both;
+      animation-play-state: paused;
+    }
+    .skill-bar-fill.animate { animation-play-state: running; }
+    @keyframes barGrow { from{transform:scaleX(0)} to{transform:scaleX(1)} }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--surface); }
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+      transition: all .3s; display: flex; flex-direction: column;
+    }
+    .project-card:hover { border-color: rgba(0,229,255,0.25); transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,.4); }
+    .project-thumb {
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, var(--surface2), #1e2030);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; position: relative; overflow: hidden;
+    }
+    .project-thumb::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(8,9,12,.8));
+    }
+    .project-platform {
+      position: absolute; top: 1rem; right: 1rem;
+      background: rgba(0,0,0,.6); border: 1px solid var(--border);
+      border-radius: 6px; padding: .25rem .6rem;
+      font-size: .7rem; color: var(--muted); z-index: 1;
+    }
+    .project-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .project-title {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem;
+      margin-bottom: .5rem;
+    }
+    .project-desc { font-size: .875rem; color: var(--muted); font-weight: 300; flex: 1; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1rem; }
+    .project-tag {
+      padding: .2rem .65rem; border-radius: 4px;
+      background: var(--surface2); font-size: .72rem; color: var(--muted);
+    }
+    .project-links { display: flex; gap: .75rem; margin-top: 1.25rem; }
+    .project-link {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .8rem; color: var(--accent); text-decoration: none;
+      transition: opacity .2s;
+    }
+    .project-link:hover { opacity: .7; }
+
+    /* ── EXPERIENCE ── */
+    #experience { }
+    .timeline { position: relative; max-width: 720px; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 8px; bottom: 0;
+      width: 1px; background: var(--border);
+    }
+    .timeline-item {
+      padding-left: 2.5rem; padding-bottom: 3rem; position: relative;
+    }
+    .timeline-dot {
+      position: absolute; left: -5px; top: 6px;
+      width: 11px; height: 11px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 12px var(--accent);
+    }
+    .timeline-date { font-size: .8rem; color: var(--accent); font-weight: 600; letter-spacing: .05em; }
+    .timeline-title {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem;
+      margin: .3rem 0 .1rem;
+    }
+    .timeline-company { font-size: .9rem; color: var(--muted); margin-bottom: .75rem; }
+    .timeline-desc { font-size: .9rem; color: var(--muted); font-weight: 300; line-height: 1.7; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--surface); text-align: center; }
+    .contact-inner { max-width: 600px; margin: 0 auto; }
+    .contact-inner .section-desc { margin-inline: auto; margin-bottom: 2.5rem; }
+    .contact-links {
+      display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
+    }
+    .contact-link {
+      display: inline-flex; align-items: center; gap: .6rem;
+      padding: .85rem 1.75rem; border-radius: 10px;
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text); text-decoration: none;
+      font-size: .9rem; font-weight: 500;
+      transition: all .2s;
+    }
+    .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .contact-link svg { width: 18px; height: 18px; }
+
+    .email-box {
+      margin-top: 2rem;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.25rem 1.75rem;
+      display: inline-flex; align-items: center; gap: 1rem;
+      font-size: .95rem; color: var(--muted);
+    }
+    .email-box a { color: var(--accent); text-decoration: none; font-weight: 500; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2rem 6vw;
+      border-top: 1px solid var(--border);
+      font-size: .8rem; color: var(--muted);
+    }
+    footer span { color: var(--accent); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: all .7s cubic-bezier(.16,1,.3,1); }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .about-image-wrap { max-width: 320px; margin: 0 auto; }
+      .nav-links { display: none; }
+    }
+
+    /* ── CURSOR GLOW ── */
+    .cursor-glow {
+      position: fixed; pointer-events: none; z-index: 9999;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,229,255,0.05) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      transition: opacity .3s;
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Mahmood<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact" class="nav-cta">Hire Me</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Available for freelance & full-time roles
+    </div>
+    <h1>
+      Crafting <em>Mobile Experiences</em><br>That People Love
+    </h1>
+    <p class="hero-sub">
+      Hi, I'm <strong>Mahmood Rihanya</strong> — a Mobile App Developer specializing in building
+      high-performance, pixel-perfect apps for iOS & Android.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+        View My Work
+      </a>
+      <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-number">5<span>+</span></div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">20<span>+</span></div>
+        <div class="stat-label">Apps Delivered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">15<span>+</span></div>
+        <div class="stat-label">Happy Clients</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">4.9<span>★</span></div>
+        <div class="stat-label">Avg App Rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-image-wrap reveal">
+      <div class="photo-placeholder">
+        <div class="photo-icon">📸</div>
+        <span>Add your photo here</span>
+      </div>
+      <div class="about-badge">
+        <span class="about-badge-icon">📱</span>
+        <div class="about-badge-text">
+          <strong>iOS & Android</strong>
+          Cross-platform expert
+        </div>
+      </div>
+    </div>
+    <div class="about-text reveal">
+      <div class="section-label">About Me</div>
+      <h2 class="section-title">Turning Ideas Into<br>Powerful Apps</h2>
+      <div class="divider"></div>
+      <p style="margin-top:1.5rem">
+        I am a Software Engineer and student at the University of Aleppo, specializing in mobile app
+        development with a focus on delivering smooth and user-friendly experiences with high performance.
+      </p>
+      <p>
+        I have hands-on experience using Flutter, working with Firebase, and integrating APIs to build
+        interactive, connected applications that solve real problems for real users.
+      </p>
+      <p>
+        I am always striving to enhance user experience and develop thoughtful, practical software
+        solutions using modern technologies and best practices.
+      </p>
+      <div class="skill-tags">
+        <span class="tag">Flutter</span>
+        <span class="tag">React Native</span>
+        <span class="tag">Swift</span>
+        <span class="tag">Kotlin</span>
+        <span class="tag">Firebase</span>
+        <span class="tag">REST APIs</span>
+        <span class="tag">UI/UX</span>
+        <span class="tag">Git</span>
+      </div>
+      <div style="margin-top:2rem">
+        <a href="#" class="btn btn-secondary" style="display:inline-flex">
+          📄 Download CV
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <div class="section-label">Expertise</div>
+    <h2 class="section-title">What I Do Best</h2>
+    <div class="divider"></div>
+    <p class="section-desc">A deep toolkit built through years of shipping real products to real users.</p>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-icon">🍎</div>
+      <div class="skill-name">iOS Development</div>
+      <div class="skill-desc">Building native iOS apps with Swift & SwiftUI for a premium Apple experience.</div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Swift / SwiftUI</span><span>90%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🤖</div>
+      <div class="skill-name">Android Development</div>
+      <div class="skill-desc">Crafting performant Android apps with Kotlin and Jetpack Compose.</div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Kotlin / Compose</span><span>85%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">💙</div>
+      <div class="skill-name">Flutter</div>
+      <div class="skill-desc">Cross-platform apps that look and feel native on every device.</div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Dart / Flutter</span><span>92%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:92%"></div></div>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">⚛️</div>
+      <div class="skill-name">React Native</div>
+      <div class="skill-desc">JavaScript-powered cross-platform development with a large ecosystem.</div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>React Native / Expo</span><span>80%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">☁️</div>
+      <div class="skill-name">Backend & APIs</div>
+      <div class="skill-desc">Firebase, REST, GraphQL — connecting apps to powerful cloud services.</div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Firebase / APIs</span><span>85%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🎨</div>
+      <div class="skill-name">UI/UX Design</div>
+      <div class="skill-desc">From Figma prototypes to pixel-perfect, animated interfaces that users adore.</div>
+      <div class="skill-bar-wrap">
+        <div class="skill-bar-label"><span>Figma / Design</span><span>78%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:78%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header reveal">
+    <div class="section-label">Portfolio</div>
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="divider"></div>
+    <p class="section-desc">A selection of apps I've built — replace these with your own work.</p>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card reveal">
+      <div class="project-thumb">
+        🛒
+        <span class="project-platform">iOS & Android</span>
+      </div>
+      <div class="project-body">
+        <div class="project-title">App Name One</div>
+        <div class="project-desc">Describe your app here. What problem does it solve? What makes it special? Mention downloads or ratings if you have them.</div>
+        <div class="project-tags">
+          <span class="project-tag">Flutter</span>
+          <span class="project-tag">Firebase</span>
+          <span class="project-tag">Stripe</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-link">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            App Store
+          </a>
+          <a href="#" class="project-link">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            Play Store
+          </a>
+          <a href="#" class="project-link">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#0f1117,#1a0a2e)">
+        💊
+        <span class="project-platform">iOS</span>
+      </div>
+      <div class="project-body">
+        <div class="project-title">App Name Two</div>
+        <div class="project-desc">Describe your second app here. Highlight key features, the tech stack used, and any notable results or metrics.</div>
+        <div class="project-tags">
+          <span class="project-tag">Swift</span>
+          <span class="project-tag">HealthKit</span>
+          <span class="project-tag">CoreData</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-link">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            App Store
+          </a>
+          <a href="#" class="project-link">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#0a1a0f,#0f1117)">
+        💬
+        <span class="project-platform">iOS & Android</span>
+      </div>
+      <div class="project-body">
+        <div class="project-title">App Name Three</div>
+        <div class="project-desc">Add your third project here. You can add more cards by duplicating this block or remove one if needed.</div>
+        <div class="project-tags">
+          <span class="project-tag">React Native</span>
+          <span class="project-tag">Socket.io</span>
+          <span class="project-tag">Node.js</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-link">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            Live Demo
+          </a>
+          <a href="#" class="project-link">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <div class="section-label">Career</div>
+    <h2 class="section-title">Work Experience</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="timeline">
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2022 — Present</div>
+      <div class="timeline-title">Senior Mobile Developer</div>
+      <div class="timeline-company">Company Name · Full-time</div>
+      <div class="timeline-desc">
+        Describe your responsibilities and achievements here. What did you build? What impact did you have?
+        Mention team size, technologies used, and any measurable results.
+      </div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2020 — 2022</div>
+      <div class="timeline-title">Mobile App Developer</div>
+      <div class="timeline-company">Previous Company · Full-time</div>
+      <div class="timeline-desc">
+        Describe your role here. What projects did you work on? What skills did you develop?
+        Don't be shy — highlight your best contributions.
+      </div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2018 — 2020</div>
+      <div class="timeline-title">Junior Developer</div>
+      <div class="timeline-company">First Company · Full-time</div>
+      <div class="timeline-desc">
+        Your starting point. Everyone has one. Describe what you learned and how you grew here.
+        Add or remove timeline items as needed.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-label reveal">Contact</div>
+    <h2 class="section-title reveal">Let's Build Something<br>Amazing Together</h2>
+    <div class="divider" style="margin: 1rem auto;" class="reveal"></div>
+    <p class="section-desc reveal" style="margin-top:1rem">
+      Whether you have an app idea, need a collaborator, or just want to say hello —
+      my inbox is always open.
+    </p>
+
+    <div class="contact-links reveal" style="margin-top:2.5rem">
+      <a href="mailto:mahmoodrihanya0@gmail.com" class="contact-link">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        Email Me
+      </a>
+      <a href="https://www.linkedin.com/in/mahmoodflutter" target="_blank" class="contact-link">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/MahmoodRihanya" target="_blank" class="contact-link">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
+      
+    </div>
+
+    <div class="email-box reveal">
+      <span>📬</span>
+      <span>Or reach me directly: <a href="mailto:mahmoodrihanya0@gmail.com">mahmoodrihanya0@gmail.com</a></span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Designed & Built by <span>Mahmood Rihanya</span> · 2025 · All rights reserved.</p>
+</footer>
+
+<script>
+  // Cursor glow
+  const glow = document.getElementById('cursorGlow');
+  document.addEventListener('mousemove', e => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.style.transitionDelay = (i * 0.05) + 's';
+        entry.target.classList.add('visible');
+        // Animate skill bars
+        entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => bar.classList.add('animate'));
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Active nav link
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--text)' : '';
+    });
+  });
+</script>
+</body>
+</html>
